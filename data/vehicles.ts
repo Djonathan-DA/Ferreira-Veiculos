@@ -3,8 +3,11 @@
  *  ESTOQUE DA LOJA — edite este arquivo para atualizar o site
  * ============================================================
  *
- * ⚠️  Os veículos abaixo são um ESTOQUE DE DEMONSTRAÇÃO.
- *     Substitua pelos carros reais da loja (modelo, ano, km e preço).
+ * Estoque montado a partir dos anúncios do Instagram
+ * @ferreira_veiculos_go (fotos em public/cars/).
+ *
+ * Campos OPCIONAIS podem ficar de fora — o site mostra "Consulte"
+ * no preço e omite a linha quando a informação não existe.
  *
  * Para adicionar a FOTO de um carro:
  *   1. Coloque a imagem na pasta  public/cars/  (ex.: public/cars/civic.jpg)
@@ -14,12 +17,12 @@
  * Campos:
  *   brand        Marca (usada no filtro do catálogo)
  *   model        Modelo e versão
- *   year         Ano fabricação/modelo
- *   price        Preço em reais (número, sem pontos)
- *   km           Quilometragem (número)
- *   fuel         "Flex" | "Gasolina" | "Diesel" | "Híbrido" | "Elétrico"
- *   transmission "Automático" | "Manual" | "CVT"
- *   color        Cor do veículo
+ *   year         (opcional) Ano fabricação/modelo
+ *   price        (opcional) Preço em reais (número, sem pontos)
+ *   km           (opcional) Quilometragem (número)
+ *   fuel         (opcional) "Flex" | "Gasolina" | "Diesel" | "Híbrido" | "Elétrico"
+ *   transmission (opcional) "Automático" | "Manual" | "CVT"
+ *   color        (opcional) Cor do veículo
  *   body         "sedan" | "hatch" | "suv" | "picape"  (define a silhueta da arte)
  *   featured     true = aparece na vitrine de destaques
  *   badges       Selos opcionais (ex.: "Único dono", "Revisado")
@@ -30,12 +33,12 @@ export type Vehicle = {
   id: string;
   brand: string;
   model: string;
-  year: string;
-  price: number;
-  km: number;
-  fuel: string;
-  transmission: string;
-  color: string;
+  year?: string;
+  price?: number;
+  km?: number;
+  fuel?: string;
+  transmission?: string;
+  color?: string;
   body: "sedan" | "hatch" | "suv" | "picape";
   featured?: boolean;
   badges?: string[];
@@ -44,154 +47,97 @@ export type Vehicle = {
 
 export const vehicles: Vehicle[] = [
   {
-    id: "civic-exl-2020",
-    brand: "Honda",
-    model: "Civic EXL 2.0 CVT",
-    year: "2020/2020",
-    price: 124900,
-    km: 68000,
-    fuel: "Flex",
-    transmission: "CVT",
-    color: "Cinza",
-    body: "sedan",
-    featured: true,
-    badges: ["Único dono", "Revisado"],
-  },
-  {
-    id: "corolla-xei-2021",
-    brand: "Toyota",
-    model: "Corolla XEi 2.0",
-    year: "2021/2021",
-    price: 129900,
-    km: 55000,
-    fuel: "Flex",
-    transmission: "Automático",
-    color: "Prata",
-    body: "sedan",
-    featured: true,
-    badges: ["Revisado"],
-  },
-  {
-    id: "compass-longitude-2022",
-    brand: "Jeep",
-    model: "Compass Longitude T270",
-    year: "2022/2022",
-    price: 139900,
-    km: 48000,
-    fuel: "Flex",
-    transmission: "Automático",
-    color: "Branco",
-    body: "suv",
-    featured: true,
-    badges: ["Garantia de procedência"],
-  },
-  {
-    id: "tcross-highline-2021",
-    brand: "Volkswagen",
-    model: "T-Cross Highline 1.4 TSI",
-    year: "2021/2021",
-    price: 116900,
-    km: 52000,
-    fuel: "Flex",
-    transmission: "Automático",
-    color: "Cinza",
-    body: "suv",
-  },
-  {
-    id: "onix-premier-2022",
+    id: "onix-joy-2019",
     brand: "Chevrolet",
-    model: "Onix Plus Premier 1.0 Turbo",
-    year: "2022/2022",
-    price: 84900,
-    km: 38000,
-    fuel: "Flex",
-    transmission: "Automático",
-    color: "Preto",
-    body: "sedan",
-  },
-  {
-    id: "creta-prestige-2021",
-    brand: "Hyundai",
-    model: "Creta Prestige 2.0",
-    year: "2021/2021",
-    price: 109900,
-    km: 60000,
-    fuel: "Flex",
-    transmission: "Automático",
-    color: "Branco",
-    body: "suv",
-  },
-  {
-    id: "toro-volcano-2021",
-    brand: "Fiat",
-    model: "Toro Volcano 2.0 Diesel 4x4",
-    year: "2021/2021",
-    price: 129900,
-    km: 74000,
-    fuel: "Diesel",
-    transmission: "Automático",
-    color: "Cinza",
-    body: "picape",
-  },
-  {
-    id: "hilux-srv-2020",
-    brand: "Toyota",
-    model: "Hilux SRV 2.8 Diesel 4x4",
-    year: "2020/2020",
-    price: 189900,
-    km: 98000,
-    fuel: "Diesel",
-    transmission: "Automático",
-    color: "Prata",
-    body: "picape",
-    badges: ["Revisado"],
-  },
-  {
-    id: "polo-tsi-2020",
-    brand: "Volkswagen",
-    model: "Polo TSI Comfortline",
-    year: "2020/2020",
-    price: 79900,
-    km: 45000,
-    fuel: "Flex",
-    transmission: "Automático",
-    color: "Branco",
-    body: "hatch",
-  },
-  {
-    id: "duster-iconic-2022",
-    brand: "Renault",
-    model: "Duster Iconic 1.6 CVT",
-    year: "2022/2022",
-    price: 92900,
-    km: 41000,
-    fuel: "Flex",
-    transmission: "CVT",
-    color: "Laranja",
-    body: "suv",
-  },
-  {
-    id: "hb20-vision-2022",
-    brand: "Hyundai",
-    model: "HB20 Vision 1.0",
-    year: "2022/2022",
-    price: 69900,
-    km: 33000,
+    model: "Onix Joy 1.0",
+    year: "2019",
     fuel: "Flex",
     transmission: "Manual",
-    color: "Prata",
+    color: "Branco",
     body: "hatch",
+    featured: true,
+    badges: ["Recém-chegado"],
+    image: "/cars/onix-joy.jpg",
   },
   {
-    id: "strada-volcano-2022",
+    id: "i30-2010",
+    brand: "Hyundai",
+    model: "i30 2.0 143cv",
+    year: "2010",
+    fuel: "Gasolina",
+    color: "Prata",
+    body: "hatch",
+    featured: true,
+    badges: ["Raridade"],
+    image: "/cars/i30.jpg",
+  },
+  {
+    id: "edge-v6-2009",
+    brand: "Ford",
+    model: "Edge V6 3.5",
+    year: "2009",
+    fuel: "Gasolina",
+    transmission: "Automático",
+    color: "Preto",
+    body: "suv",
+    featured: true,
+    badges: ["SUV premium"],
+    image: "/cars/edge.jpg",
+  },
+  {
+    id: "argo",
     brand: "Fiat",
-    model: "Strada Volcano 1.3",
-    year: "2022/2022",
-    price: 94900,
-    km: 36000,
+    model: "Argo",
+    fuel: "Flex",
+    color: "Cinza",
+    body: "hatch",
+    image: "/cars/argo.jpg",
+  },
+  {
+    id: "hb20",
+    brand: "Hyundai",
+    model: "HB20",
+    fuel: "Flex",
+    color: "Prata",
+    body: "hatch",
+    image: "/cars/hb20.jpg",
+  },
+  {
+    id: "versa",
+    brand: "Nissan",
+    model: "Versa",
+    fuel: "Flex",
+    color: "Prata",
+    body: "sedan",
+    image: "/cars/versa.jpg",
+  },
+  {
+    id: "siena",
+    brand: "Fiat",
+    model: "Siena",
+    fuel: "Flex",
+    color: "Preto",
+    body: "sedan",
+    image: "/cars/siena.jpg",
+  },
+  {
+    id: "palio-fire",
+    brand: "Fiat",
+    model: "Palio Fire",
+    fuel: "Flex",
+    transmission: "Manual",
+    color: "Branco",
+    body: "hatch",
+    image: "/cars/palio-fire.jpg",
+  },
+  {
+    id: "celta",
+    brand: "Chevrolet",
+    model: "Celta",
     fuel: "Flex",
     transmission: "Manual",
     color: "Vermelho",
-    body: "picape",
+    body: "hatch",
+    image: "/cars/celta.jpg",
   },
 ];

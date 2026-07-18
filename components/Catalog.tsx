@@ -32,22 +32,32 @@ export function Catalog() {
       const matchBrand = brand === "Todas" || v.brand === brand;
       const matchQuery =
         q === "" ||
-        `${v.brand} ${v.model} ${v.year} ${v.color}`.toLowerCase().includes(q);
+        `${v.brand} ${v.model} ${v.year ?? ""} ${v.color ?? ""}`
+          .toLowerCase()
+          .includes(q);
       return matchBrand && matchQuery;
     });
 
     switch (sort) {
       case "menor-preco":
-        list = [...list].sort((a, b) => a.price - b.price);
+        list = [...list].sort(
+          (a, b) => (a.price ?? Infinity) - (b.price ?? Infinity),
+        );
         break;
       case "maior-preco":
-        list = [...list].sort((a, b) => b.price - a.price);
+        list = [...list].sort(
+          (a, b) => (b.price ?? -Infinity) - (a.price ?? -Infinity),
+        );
         break;
       case "menor-km":
-        list = [...list].sort((a, b) => a.km - b.km);
+        list = [...list].sort(
+          (a, b) => (a.km ?? Infinity) - (b.km ?? Infinity),
+        );
         break;
       case "mais-novo":
-        list = [...list].sort((a, b) => b.year.localeCompare(a.year));
+        list = [...list].sort((a, b) =>
+          (b.year ?? "").localeCompare(a.year ?? ""),
+        );
         break;
       default:
         list = [...list].sort(

@@ -9,7 +9,8 @@ import {
   WhatsAppIcon,
 } from "./Icons";
 
-function formatPrice(value: number) {
+function formatPrice(value?: number) {
+  if (value == null) return "Consulte";
   return value.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -61,25 +62,35 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         <h3 className="text-base font-bold text-white sm:text-lg">
           {vehicle.model}
         </h3>
-        <p className="mt-0.5 text-xs text-white/50">Cor {vehicle.color}</p>
+        {vehicle.color && (
+          <p className="mt-0.5 text-xs text-white/50">Cor {vehicle.color}</p>
+        )}
 
         <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 text-[13px] text-white/70">
-          <div className="flex items-center gap-2">
-            <CalendarIcon className="h-4 w-4 shrink-0 text-gold-500" />
-            <dd>{vehicle.year}</dd>
-          </div>
-          <div className="flex items-center gap-2">
-            <GaugeIcon className="h-4 w-4 shrink-0 text-gold-500" />
-            <dd>{formatKm(vehicle.km)}</dd>
-          </div>
-          <div className="flex items-center gap-2">
-            <GearboxIcon className="h-4 w-4 shrink-0 text-gold-500" />
-            <dd>{vehicle.transmission}</dd>
-          </div>
-          <div className="flex items-center gap-2">
-            <FuelIcon className="h-4 w-4 shrink-0 text-gold-500" />
-            <dd>{vehicle.fuel}</dd>
-          </div>
+          {vehicle.year && (
+            <div className="flex items-center gap-2">
+              <CalendarIcon className="h-4 w-4 shrink-0 text-gold-500" />
+              <dd>{vehicle.year}</dd>
+            </div>
+          )}
+          {vehicle.km != null && (
+            <div className="flex items-center gap-2">
+              <GaugeIcon className="h-4 w-4 shrink-0 text-gold-500" />
+              <dd>{formatKm(vehicle.km)}</dd>
+            </div>
+          )}
+          {vehicle.transmission && (
+            <div className="flex items-center gap-2">
+              <GearboxIcon className="h-4 w-4 shrink-0 text-gold-500" />
+              <dd>{vehicle.transmission}</dd>
+            </div>
+          )}
+          {vehicle.fuel && (
+            <div className="flex items-center gap-2">
+              <FuelIcon className="h-4 w-4 shrink-0 text-gold-500" />
+              <dd>{vehicle.fuel}</dd>
+            </div>
+          )}
         </dl>
 
         <div className="mt-5 flex items-end justify-between border-t border-white/10 pt-4">

@@ -1,4 +1,5 @@
 import { Logo } from "./Logo";
+import { vehicles } from "@/data/vehicles";
 import { StarHalfIcon, StarIcon, WhatsAppIcon, ArrowRightIcon } from "./Icons";
 import { store } from "@/lib/config";
 
@@ -89,9 +90,9 @@ export function Hero() {
           <div className="hidden h-8 w-px bg-white/15 sm:block" />
           <div className="flex flex-col items-start leading-tight">
             <span className="font-display text-2xl font-bold text-gold-400">
-              12+
+              {vehicles.length}
             </span>
-            <span className="text-xs text-white/60">marcas no estoque</span>
+            <span className="text-xs text-white/60">veículos no estoque</span>
           </div>
           <div className="hidden h-8 w-px bg-white/15 sm:block" />
           <div className="flex flex-col items-start leading-tight">
