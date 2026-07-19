@@ -28,7 +28,7 @@ export async function createSession() {
   const exp = Date.now() + 7 * DAY;
   (await cookies()).set(COOKIE, sign(exp), {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
     maxAge: 7 * 24 * 60 * 60,
