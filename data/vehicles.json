@@ -107,7 +107,15 @@
       "color": "Vermelho",
       "body": "hatch",
       "image": "/cars/celta.jpg",
-      "status": "disponivel"
+      "status": "vendido",
+      "soldPrice": 29000,
+      "soldDate": "2026-07-19",
+      "price": 30000,
+      "cost": 25000,
+      "km": 100000,
+      "badges": [
+        "Revisado"
+      ]
     }
   ]
 }
