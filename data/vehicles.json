@@ -10,7 +10,9 @@
       "color": "Branco",
       "body": "hatch",
       "featured": true,
-      "badges": ["Recém-chegado"],
+      "badges": [
+        "Recém-chegado"
+      ],
       "image": "/cars/onix-joy.jpg",
       "status": "disponivel"
     },
@@ -23,7 +25,9 @@
       "color": "Prata",
       "body": "hatch",
       "featured": true,
-      "badges": ["Raridade"],
+      "badges": [
+        "Raridade"
+      ],
       "image": "/cars/i30.jpg",
       "status": "disponivel"
     },
@@ -37,7 +41,9 @@
       "color": "Preto",
       "body": "suv",
       "featured": true,
-      "badges": ["SUV premium"],
+      "badges": [
+        "SUV premium"
+      ],
       "image": "/cars/edge.jpg",
       "status": "disponivel"
     },
