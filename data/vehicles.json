@@ -1,0 +1,107 @@
+{
+  "vehicles": [
+    {
+      "id": "onix-joy-2019",
+      "brand": "Chevrolet",
+      "model": "Onix Joy 1.0",
+      "year": "2019",
+      "fuel": "Flex",
+      "transmission": "Manual",
+      "color": "Branco",
+      "body": "hatch",
+      "featured": true,
+      "badges": ["Recém-chegado"],
+      "image": "/cars/onix-joy.jpg",
+      "status": "disponivel"
+    },
+    {
+      "id": "i30-2010",
+      "brand": "Hyundai",
+      "model": "i30 2.0 143cv",
+      "year": "2010",
+      "fuel": "Gasolina",
+      "color": "Prata",
+      "body": "hatch",
+      "featured": true,
+      "badges": ["Raridade"],
+      "image": "/cars/i30.jpg",
+      "status": "disponivel"
+    },
+    {
+      "id": "edge-v6-2009",
+      "brand": "Ford",
+      "model": "Edge V6 3.5",
+      "year": "2009",
+      "fuel": "Gasolina",
+      "transmission": "Automático",
+      "color": "Preto",
+      "body": "suv",
+      "featured": true,
+      "badges": ["SUV premium"],
+      "image": "/cars/edge.jpg",
+      "status": "disponivel"
+    },
+    {
+      "id": "argo",
+      "brand": "Fiat",
+      "model": "Argo",
+      "fuel": "Flex",
+      "color": "Cinza",
+      "body": "hatch",
+      "image": "/cars/argo.jpg",
+      "status": "disponivel"
+    },
+    {
+      "id": "hb20",
+      "brand": "Hyundai",
+      "model": "HB20",
+      "fuel": "Flex",
+      "color": "Prata",
+      "body": "hatch",
+      "image": "/cars/hb20.jpg",
+      "status": "disponivel"
+    },
+    {
+      "id": "versa",
+      "brand": "Nissan",
+      "model": "Versa",
+      "fuel": "Flex",
+      "color": "Prata",
+      "body": "sedan",
+      "image": "/cars/versa.jpg",
+      "status": "disponivel"
+    },
+    {
+      "id": "siena",
+      "brand": "Fiat",
+      "model": "Siena",
+      "fuel": "Flex",
+      "color": "Preto",
+      "body": "sedan",
+      "image": "/cars/siena.jpg",
+      "status": "disponivel"
+    },
+    {
+      "id": "palio-fire",
+      "brand": "Fiat",
+      "model": "Palio Fire",
+      "fuel": "Flex",
+      "transmission": "Manual",
+      "color": "Branco",
+      "body": "hatch",
+      "image": "/cars/palio-fire.jpg",
+      "status": "disponivel"
+    },
+    {
+      "id": "celta",
+      "brand": "Chevrolet",
+      "model": "Celta",
+      "fuel": "Flex",
+      "transmission": "Manual",
+      "color": "Vermelho",
+      "body": "hatch",
+      "image": "/cars/celta.jpg",
+      "status": "disponivel"
+    }
+  ]
+}

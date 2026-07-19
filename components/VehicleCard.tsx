@@ -39,9 +39,15 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         )}
 
         {/* selos */}
-        {vehicle.badges && vehicle.badges.length > 0 && (
+        {(vehicle.status === "negociacao" ||
+          (vehicle.badges && vehicle.badges.length > 0)) && (
           <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-            {vehicle.badges.map((b) => (
+            {vehicle.status === "negociacao" && (
+              <span className="rounded-full bg-orange-500 px-2.5 py-1 text-[10px] font-bold tracking-wide text-night uppercase">
+                Em negociação
+              </span>
+            )}
+            {(vehicle.badges ?? []).map((b) => (
               <span
                 key={b}
                 className="rounded-full bg-gold-500 px-2.5 py-1 text-[10px] font-bold tracking-wide text-night uppercase"
