@@ -17,7 +17,8 @@
       "status": "disponivel",
       "images": [
         "/cars/onix-joy.jpg"
-      ]
+      ],
+      "price": 45000
     },
     {
       "id": "i30-2010",
