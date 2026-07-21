@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Vehicle, VehicleStatus } from "@/data/vehicles";
+import { photosOf } from "@/data/vehicles";
 
 export function slugify(s: string) {
   return s
@@ -45,7 +46,10 @@ export function EditModal({
   onClose: () => void;
   onSave: (v: Vehicle) => void;
 }) {
-  const [v, setV] = useState<Vehicle>(vehicle);
+  const [v, setV] = useState<Vehicle>({
+    ...vehicle,
+    images: photosOf(vehicle),
+  });
   const [uploading, setUploading] = useState(false);
   const set = (patch: Partial<Vehicle>) => setV((p) => ({ ...p, ...patch }));
 
@@ -54,10 +58,7 @@ export function EditModal({
       ? undefined
       : Number(s.replace(/\./g, "").replace(",", "."));
 
-  async function handlePhoto(file: File) {
-    const id = v.id || slugify(`${v.brand} ${v.model}`);
-    if (!id) return alert("Preencha marca e modelo antes da foto.");
-    setUploading(true);
+  async function uploadOne(id: string, index: number, file: File) {
     const b64 = await new Promise<string>((res) => {
       const r = new FileReader();
       r.onload = () => res((r.result as string).split(",")[1]);
@@ -66,12 +67,43 @@ export function EditModal({
     const resp = await fetch("/api/admin/upload", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, base64: b64 }),
+      body: JSON.stringify({ id, index, base64: b64 }),
     });
-    setUploading(false);
     const j = await resp.json().catch(() => ({}));
-    if (resp.ok) set({ id: v.id || id, image: j.image });
-    else alert(`Erro no upload: ${j.error ?? resp.status}`);
+    if (!resp.ok) throw new Error(j.error ?? String(resp.status));
+    return j.image as string;
+  }
+
+  async function handlePhotos(files: FileList) {
+    const id = v.id || slugify(`${v.brand} ${v.model}`);
+    if (!id) return alert("Preencha marca e modelo antes da foto.");
+    setUploading(true);
+    try {
+      const current = v.images ?? [];
+      const uploaded: string[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const image = await uploadOne(id, current.length + i + 1, files[i]);
+        uploaded.push(image);
+      }
+      set({ id: v.id || id, images: [...current, ...uploaded] });
+    } catch (e) {
+      alert(`Erro no upload: ${e}`);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  function removePhoto(index: number) {
+    const next = (v.images ?? []).filter((_, i) => i !== index);
+    set({ images: next });
+  }
+
+  function movePhoto(index: number, dir: -1 | 1) {
+    const imgs = [...(v.images ?? [])];
+    const target = index + dir;
+    if (target < 0 || target >= imgs.length) return;
+    [imgs[index], imgs[target]] = [imgs[target], imgs[index]];
+    set({ images: imgs });
   }
 
   return (
@@ -171,6 +203,57 @@ export function EditModal({
               onChange={(e) => set({ color: e.target.value || undefined })}
             />
           </Field>
+          <Field label="Versão / motor">
+            <input
+              className={inputCls}
+              value={v.version ?? ""}
+              placeholder="1.0 Turbo Flex"
+              onChange={(e) => set({ version: e.target.value || undefined })}
+            />
+          </Field>
+          <Field label="Portas">
+            <select
+              className={inputCls}
+              value={v.doors ?? ""}
+              onChange={(e) =>
+                set({ doors: e.target.value ? Number(e.target.value) : undefined })
+              }
+            >
+              <option value="">—</option>
+              <option value="2">2</option>
+              <option value="4">4</option>
+            </select>
+          </Field>
+          <Field label="Direção">
+            <select
+              className={inputCls}
+              value={v.steering ?? ""}
+              onChange={(e) => set({ steering: e.target.value || undefined })}
+            >
+              <option value="">—</option>
+              {["Mecânica", "Hidráulica", "Elétrica"].map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+          </Field>
+          <Field label="Aceita troca">
+            <select
+              className={inputCls}
+              value={
+                v.acceptsTrade == null ? "" : v.acceptsTrade ? "sim" : "nao"
+              }
+              onChange={(e) =>
+                set({
+                  acceptsTrade:
+                    e.target.value === "" ? undefined : e.target.value === "sim",
+                })
+              }
+            >
+              <option value="">—</option>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </Field>
           <Field label="Carroceria *">
             <select
               className={inputCls}
@@ -243,30 +326,96 @@ export function EditModal({
               }
             />
           </Field>
-          <Field label="Foto">
-            <div className="flex items-center gap-3">
-              {v.image && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={v.image}
-                  alt=""
-                  className="h-10 w-14 rounded object-cover"
-                />
-              )}
-              <label className="cursor-pointer rounded-lg border border-white/15 px-3 py-2 text-xs hover:bg-white/10">
-                {uploading ? "Enviando…" : "Enviar foto"}
-                <input
-                  type="file"
-                  accept="image/jpeg,image/png"
-                  className="hidden"
-                  onChange={(e) => {
-                    const f = e.target.files?.[0];
-                    if (f) handlePhoto(f);
-                  }}
-                />
-              </label>
-            </div>
+        </div>
+
+        <div className="mt-4">
+          <Field label="Descrição (aparece na página de detalhes do carro)">
+            <textarea
+              className={`${inputCls} min-h-24 resize-y`}
+              value={v.description ?? ""}
+              placeholder="Conte a história do carro: revisões feitas, itens de série, motivo da venda, condições de pagamento..."
+              onChange={(e) =>
+                set({ description: e.target.value || undefined })
+              }
+            />
           </Field>
+        </div>
+
+        {/* Galeria de fotos */}
+        <div className="mt-4">
+          <span className="mb-2 block text-xs font-semibold text-white/50">
+            Fotos ({(v.images ?? []).length})
+          </span>
+          <div className="flex flex-wrap gap-3">
+            {(v.images ?? []).map((src, i) => (
+              <div
+                key={src + i}
+                className="group relative h-20 w-28 overflow-hidden rounded-lg border border-white/15"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt="" className="h-full w-full object-cover" />
+                {i === 0 && (
+                  <span className="absolute top-1 left-1 rounded bg-amber-400 px-1.5 py-0.5 text-[9px] font-bold text-black">
+                    Capa
+                  </span>
+                )}
+                <div className="absolute inset-x-0 bottom-0 flex justify-center gap-1 bg-black/60 py-1 opacity-0 transition group-hover:opacity-100">
+                  <button
+                    type="button"
+                    title="Mover para a esquerda"
+                    onClick={() => movePhoto(i, -1)}
+                    className="px-1.5 text-xs text-white hover:text-amber-300"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    title="Remover"
+                    onClick={() => removePhoto(i)}
+                    className="px-1.5 text-xs text-red-400 hover:text-red-300"
+                  >
+                    ✕
+                  </button>
+                  <button
+                    type="button"
+                    title="Mover para a direita"
+                    onClick={() => movePhoto(i, 1)}
+                    className="px-1.5 text-xs text-white hover:text-amber-300"
+                  >
+                    →
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            <label className="flex h-20 w-28 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-white/20 text-center text-xs text-white/50 hover:border-amber-400 hover:text-amber-300">
+              {uploading ? (
+                "Enviando…"
+              ) : (
+                <>
+                  <span className="text-lg leading-none">+</span>
+                  Adicionar
+                  <br />
+                  foto(s)
+                </>
+              )}
+              <input
+                type="file"
+                accept="image/jpeg,image/png"
+                multiple
+                className="hidden"
+                disabled={uploading}
+                onChange={(e) => {
+                  if (e.target.files?.length) handlePhotos(e.target.files);
+                  e.target.value = "";
+                }}
+              />
+            </label>
+          </div>
+          <p className="mt-2 text-[11px] text-white/35">
+            A primeira foto é usada como capa nos cards do site. Use as setas
+            para reordenar.
+          </p>
         </div>
 
         <div className="mt-6 flex justify-end gap-3">
@@ -281,7 +430,14 @@ export function EditModal({
             onClick={() => {
               if (!v.brand || !v.model)
                 return alert("Marca e modelo são obrigatórios.");
-              onSave({ ...v, id: v.id || slugify(`${v.brand} ${v.model}`) });
+              const id = v.id || slugify(`${v.brand} ${v.model}`);
+              const images = v.images ?? [];
+              onSave({
+                ...v,
+                id,
+                images,
+                image: images[0] ?? v.image,
+              });
             }}
             className="rounded-xl bg-amber-400 px-6 py-2.5 text-sm font-bold text-black hover:bg-amber-300 disabled:opacity-50"
           >

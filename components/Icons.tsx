@@ -318,3 +318,23 @@ export function SearchIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function SlidersIcon(props: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M4 6h9M17 6h3M4 12h3M9 12h11M4 18h13M21 18h-0" />
+      <circle cx="15" cy="6" r="2.2" />
+      <circle cx="7" cy="12" r="2.2" />
+      <circle cx="17" cy="18" r="2.2" />
+    </svg>
+  );
+}

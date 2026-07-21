@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Vehicle, VehicleStatus } from "@/data/vehicles";
+import { coverOf, type Vehicle, type VehicleStatus } from "@/data/vehicles";
 import { BRL, useAdmin } from "@/components/admin/shell";
 import { EditModal } from "@/components/admin/EditModal";
 
@@ -125,7 +125,7 @@ export default function EstoquePage() {
               <div className="relative aspect-[16/9] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={v.image ?? "/media/hero-poster.jpg"}
+                  src={coverOf(v) ?? "/media/hero-poster.jpg"}
                   alt=""
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
                 />

@@ -6,11 +6,11 @@ import { WhatsAppIcon } from "./Icons";
 import { store } from "@/lib/config";
 
 const links = [
-  { href: "#inicio", label: "Início" },
-  { href: "#estoque", label: "Estoque" },
-  { href: "#a-loja", label: "A Loja" },
-  { href: "#avaliacoes", label: "Avaliações" },
-  { href: "#contato", label: "Contato" },
+  { href: "/#inicio", label: "Início" },
+  { href: "/#estoque", label: "Estoque" },
+  { href: "/#a-loja", label: "A Loja" },
+  { href: "/#avaliacoes", label: "Avaliações" },
+  { href: "/#contato", label: "Contato" },
 ];
 
 export function Header() {
@@ -33,7 +33,7 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#inicio" aria-label="Ferreira Veículos — início">
+        <a href="/#inicio" aria-label="Ferreira Veículos — início">
           <Logo variant="inline" prefix="hd" />
         </a>
 
