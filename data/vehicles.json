@@ -33,13 +33,11 @@
       "badges": [
         "Raridade"
       ],
-      "image": "/cars/i30-2010-2.jpg",
+      "image": "/cars/i30.jpg",
       "status": "disponivel",
       "images": [
-        "/cars/i30-2010-2.jpg",
         "/cars/i30.jpg"
-      ],
-      "description": "O Chevrolet Onix Joy 1.0 é a versão de entrada e focada no custo-benefício da linha. Equipado com motor 1.0 de até 80 cv e câmbio manual de 6 marchas, destaca-se pelo excelente consumo (até 15,3 km/l na estrada com gasolina) e manutenção acessível. Os preços no mercado de seminovos variam de acordo com o ano"
+      ]
     },
     {
       "id": "edge-v6-2009",
