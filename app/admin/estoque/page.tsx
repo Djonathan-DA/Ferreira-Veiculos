@@ -203,7 +203,7 @@ export default function EstoquePage() {
                         )
                       ) {
                         await persist(
-                          vehicles.filter((x) => x.id !== v.id),
+                          { action: "delete", id: v.id },
                           `Remove veículo ${v.brand} ${v.model}`,
                         );
                       }
@@ -226,11 +226,8 @@ export default function EstoquePage() {
           busy={busy}
           onClose={() => setEditing(null)}
           onSave={async (v) => {
-            const next = isNew
-              ? [...vehicles, v]
-              : vehicles.map((x) => (x.id === v.id ? v : x));
             const ok = await persist(
-              next,
+              { action: "upsert", vehicle: v },
               `${isNew ? "Adiciona" : "Atualiza"} ${v.brand} ${v.model} via painel admin`,
             );
             if (ok) setEditing(null);

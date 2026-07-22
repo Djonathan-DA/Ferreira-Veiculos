@@ -15,10 +15,14 @@ import type { Vehicle } from "@/data/vehicles";
 /*  Contexto de dados do painel                                        */
 /* ------------------------------------------------------------------ */
 
+export type StockPatch =
+  | { action: "upsert"; vehicle: Vehicle }
+  | { action: "delete"; id: string };
+
 type AdminCtx = {
   vehicles: Vehicle[];
   busy: boolean;
-  persist: (next: Vehicle[], message: string) => Promise<boolean>;
+  persist: (patch: StockPatch, message: string) => Promise<boolean>;
   reload: () => Promise<void>;
 };
 
@@ -79,16 +83,18 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   };
 
   const persist = useCallback(
-    async (next: Vehicle[], message: string) => {
+    async (patch: StockPatch, message: string) => {
       setBusy(true);
       const r = await fetch("/api/admin/stock", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vehicles: next, message }),
+        body: JSON.stringify({ ...patch, message }),
       });
       setBusy(false);
       if (r.ok) {
-        setVehicles(next);
+        // o servidor devolve o estoque completo já mesclado — vira a verdade local
+        const j = await r.json().catch(() => ({}));
+        if (Array.isArray(j.vehicles)) setVehicles(j.vehicles);
         notify("✓ Salvo! O site público atualiza em ~1 minuto.");
         return true;
       }

@@ -82,7 +82,8 @@ export function EditModal({
       const current = v.images ?? [];
       const uploaded: string[] = [];
       for (let i = 0; i < files.length; i++) {
-        const image = await uploadOne(id, current.length + i + 1, files[i]);
+        // sufixo por carimbo de tempo: nunca colide com fotos existentes
+        const image = await uploadOne(id, Date.now() + i, files[i]);
         uploaded.push(image);
       }
       set({ id: v.id || id, images: [...current, ...uploaded] });

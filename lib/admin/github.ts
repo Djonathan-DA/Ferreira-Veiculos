@@ -52,12 +52,19 @@ export async function writeFile(
   return res.json();
 }
 
-export async function writeJson(path: string, data: unknown, message: string) {
-  let sha: string | undefined;
-  try {
-    sha = (await readFile(path)).sha;
-  } catch {
-    sha = undefined;
+export async function writeJson(
+  path: string,
+  data: unknown,
+  message: string,
+  knownSha?: string,
+) {
+  let sha = knownSha;
+  if (!sha) {
+    try {
+      sha = (await readFile(path)).sha;
+    } catch {
+      sha = undefined;
+    }
   }
   const b64 = Buffer.from(JSON.stringify(data, null, 2) + "\n").toString(
     "base64",
