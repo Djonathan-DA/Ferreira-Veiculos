@@ -14,7 +14,7 @@
         "EXCLUSIVO"
       ],
       "image": "/cars/onix-joy.jpg",
-      "status": "disponivel",
+      "status": "vendido",
       "images": [
         "/cars/onix-joy.jpg",
         "/cars/onix-joy-2019-2.jpg"
@@ -24,7 +24,9 @@
       "doors": 4,
       "steering": "Hidráulica",
       "km": 100000,
-      "cost": 30000
+      "cost": 30000,
+      "soldPrice": 45000,
+      "soldDate": "2026-07-22"
     },
     {
       "id": "i30-2010",
