@@ -38,11 +38,11 @@
       "badges": [
         "Raridade"
       ],
-      "image": "/cars/i30-2010-2.jpg",
+      "image": "/cars/i30.jpg",
       "status": "disponivel",
       "images": [
-        "/cars/i30-2010-2.jpg",
-        "/cars/i30.jpg"
+        "/cars/i30.jpg",
+        "/cars/i30-2010-2.jpg"
       ]
     },
     {
