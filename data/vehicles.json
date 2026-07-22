@@ -111,6 +111,32 @@
       "body": "hatch",
       "image": "/cars/palio-fire.jpg",
       "status": "disponivel"
+    },
+    {
+      "id": "chevrolet-corsa",
+      "brand": "Chevrolet",
+      "model": "Corsa",
+      "body": "sedan",
+      "status": "disponivel",
+      "images": [
+        "/cars/chevrolet-corsa-1784680885584.jpg"
+      ],
+      "year": "2010",
+      "price": 25000,
+      "cost": 20000,
+      "km": 120000,
+      "fuel": "Flex",
+      "transmission": "Manual",
+      "color": "Prata",
+      "version": "1.4",
+      "doors": 4,
+      "steering": "Mecânica",
+      "acceptsTrade": false,
+      "badges": [
+        "Revisado"
+      ],
+      "description": "Carro top",
+      "image": "/cars/chevrolet-corsa-1784680885584.jpg"
     }
   ]
 }
